@@ -1,0 +1,37 @@
+# api-test-agent 配置示例
+# 复制为 agent.yaml 后按需修改;所有项均可用 CLI 参数或环境变量覆盖
+
+llm:
+  # OpenAI 兼容服务(DeepSeek / GLM / OpenAI 等)
+  provider: openai-compatible
+  model_id: glm-5.2          # 或 deepseek-chat 等
+  base_url: https://token.sensenova.cn/v1
+  api_key: sk-iFiZdCDe3JxAZRdrEf7DIhYTJqJ2Je7M          # 也可用环境变量 ATA_LLM_API_KEY
+  context_window: 128000
+  max_tokens: 32000
+  # 推理模型必须关闭思考,否则会长时间只输出 reasoning 不调工具(实测 glm-5.2):
+  extra_body: {"thinking": {"type": "disabled"}}
+  # 直连可用(2026-10-04 实测)。如遇直连流式停滞,或需要请求日志/客户端限流,用本地中转:
+  #   python scripts/logging_proxy.py 18412 https://token.sensenova.cn/v1
+  #   base_url: http://127.0.0.1:18412/v1
+  #   (环境变量 ATA_PROXY_MIN_INTERVAL=6 可限流,减少上游 429 重试)
+
+service:
+  base_url: http://127.0.0.1:8100        # 被测服务地址
+  app_cmd: ""                             # 可选:服务启动命令,Agent 会自动拉起并在结束时停止
+  health_path: /health
+  test_account:
+    username: admin
+    password: Admin12345
+  login:
+    path: /api/login                      # 登录接口(用于获取 token;留空表示无登录态)
+    username_field: username
+    password_field: password
+    token_field: data.token               # 登录响应中 token 的点路径
+    header_format: "Bearer {token}"
+
+project_dir: .
+output_dir: ""                            # 默认 <项目>../ata_output/<项目名>
+project_code: DEMO                        # 用例编号项目码,默认取项目名大写
+allure_home: D:\code\ceshi\component\allure-2.46.1   # allure 安装目录(也可在 PATH)
+max_fix_rounds: 2                         # P4 自测修复循环上限

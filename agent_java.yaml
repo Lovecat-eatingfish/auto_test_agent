@@ -1,0 +1,29 @@
+# 真实验证运行配置(jmeter-demo, Java Spring + SQLite + JWT)
+llm:
+  provider: openai-compatible
+  model_id: glm-5.2
+  base_url: https://token.sensenova.cn/v1
+  api_key: sk-iFiZdCDe3JxAZRdrEf7DIhYTJqJ2Je7M
+  context_window: 128000
+  max_tokens: 32000
+  extra_body: {"thinking": {"type": "disabled"}}
+
+service:
+  base_url: http://127.0.0.1:38000
+  app_cmd: 'java -jar target/jmeter-demo-1.0.0.jar'
+  health_path: /ping
+  test_account:
+    username: user1
+    password: "123456"
+  login:
+    path: /login
+    username_field: username
+    password_field: password
+    token_field: data.token
+    header_format: "Bearer {token}"
+
+project_dir: D:\code\ceshi\auto_test_agent\jmeter-demo
+output_dir: D:\code\ceshi\auto_test_agent\output\real_java
+project_code: DEMO
+allure_home: D:\code\ceshi\component\allure-2.46.1
+max_fix_rounds: 2

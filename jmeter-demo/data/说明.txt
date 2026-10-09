@@ -1,0 +1,1 @@
+SQLite 库文件 demo.db 生成在这里；删掉 demo.db（及 demo.db-wal / demo.db-shm）即可重置全部数据。

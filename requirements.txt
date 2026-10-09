@@ -1,0 +1,14 @@
+# agent 工具依赖
+pi-coding-agent-python-sdk>=0.4.3
+openpyxl>=3.1.0
+PyYAML>=6.0
+requests>=2.31.0
+
+# 生成工程与自测所需
+pytest>=8.0.0
+pytest-json-report>=1.5.0
+allure-pytest>=2.13.0
+
+# 被测示例项目依赖(demo_app)
+fastapi>=0.110.0
+uvicorn>=0.29.0

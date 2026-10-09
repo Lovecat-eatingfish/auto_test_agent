@@ -1,0 +1,29 @@
+# 真实验证运行配置(demo_app)
+llm:
+  provider: openai-compatible
+  model_id: glm-5.2          # 或 deepseek-chat 等
+  base_url: https://token.sensenova.cn/v1
+  api_key: sk-iFiZdCDe3JxAZRdrEf7DIhYTJqJ2Je7M          # 也可用环境变量 ATA_LLM_API_KEY
+  context_window: 128000
+  max_tokens: 32000
+  extra_body: {"thinking": {"type": "disabled"}}
+
+service:
+  base_url: http://127.0.0.1:8100
+  app_cmd: 'D:/code/ceshi/auto_test_agent/.venv/Scripts/python.exe -m uvicorn --app-dir D:/code/ceshi/auto_test_agent demo_app.main:app --host 127.0.0.1 --port 8100'
+  health_path: /health
+  test_account:
+    username: admin
+    password: Admin12345
+  login:
+    path: /api/login
+    username_field: username
+    password_field: password
+    token_field: data.token
+    header_format: "Bearer {token}"
+
+project_dir: D:\code\ceshi\auto_test_agent\demo_app
+output_dir: D:\code\ceshi\auto_test_agent\output\real_demo
+project_code: DEMO
+allure_home: D:\code\ceshi\component\allure-2.46.1
+max_fix_rounds: 2
