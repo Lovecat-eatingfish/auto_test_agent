@@ -76,3 +76,13 @@ v1*.md
 知识问答.md
 简历/
 
+# Build outputs of demo targets
+jmeter-demo/target/
+
+# AI agent docs / tooling config
+AGENTS.md
+.zcodeignore
+
+# Scratch (throwaway practice code)
+笔试/
+
